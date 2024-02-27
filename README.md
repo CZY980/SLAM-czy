@@ -4,12 +4,9 @@
 世界坐标系即惯性坐标系，可认为静止不动；相机坐标系可经旋转平移转换为世界坐标系；像素坐标系以图片左上角为原点，为二维坐标系。
 #### 相机坐标系至世界坐标系
 二坐标系之间相差一个欧氏变换，由旋转和平移组成。  
-旋转矩阵R：[a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>]<sup>T</sup>=Ra', 
-R=[e<sub>1</sub><sup>T</sup>,e<sub>2</sub><sup>T</sup>,e<sub>3</sub><sup>T</sup>]<sup>T</sup>*[e'<sub>1</sub>, e'<sub>2</sub>, e'<sub>3</sub>]  
-平移t：t<sub>12</sub>对应坐标系1原点指向坐标系2原点的向量，在坐标1下取的坐标。  
-最终得 a'=Ra+t, a<sub>1</sub>=R<sub>12</sub>a<sub>2</sub>+t<sub>12</sub>
-变换矩阵T：[a',1]<sup>T</sup>=T[a,1]，
-T为[R,t \n 0<sup>T</sup>,1]。
+以旋转矩阵表示，a<sub>1</sub>=R<sub>12</sub>a<sub>2</sub>+t<sub>12</sub>  
+以变换矩阵表示，[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>
+
 ## 任务2
 ### 学习相机标定，学习至少一种相机标定方法，并使用matlab或opencv标定一个相机
 ## 任务3
@@ -18,6 +15,13 @@ T为[R,t \n 0<sup>T</sup>,1]。
 ### 理清项目中各坐标系的转换关系，制作思维导图
 # 学习笔记
 ## 第三章
-a^b为a叉乘b，可看作a^矩阵与b向量的运算，其中a^= 0 -a3 a2, a3 0 -a1, -a2 a1 0  
+a^b为a叉乘b，可看作a^矩阵与b向量的运算，其中a^=[ 0 -a3 a2, a3 0 -a1, -a2 a1 0 ] 
+旋转矩阵R：[a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>]<sup>T</sup>=Ra', 
+R=[e<sub>1</sub><sup>T</sup>,e<sub>2</sub><sup>T</sup>,e<sub>3</sub><sup>T</sup>]<sup>T</sup>*[e'<sub>1</sub>, e'<sub>2</sub>, e'<sub>3</sub>]  
 旋转矩阵各分量等于各基向量夹角的余弦值，矩阵充要为行列式为1的正交矩阵，因而其逆（亦即转置）描述相反旋转。  
+平移t：t<sub>12</sub>对应坐标系1原点指向坐标系2原点的向量，在坐标1下取的坐标。  
+最终得 a'=Ra+t, a<sub>1</sub>=R<sub>12</sub>a<sub>2</sub>+t<sub>12</sub>  
 R<sub>12</sub>等下标从右至左读。  
+变换矩阵T：[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>，
+T为[R,t \n 0<sup>T</sup>,1]。  
+罗德里格斯公式：将用旋转向量\theta n 表示的旋转转换为以旋转矩阵表示：R=cos theta I+(1-cos theta)nn<sub>T</sub>+sin theta n^
