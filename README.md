@@ -2,10 +2,14 @@
 ## 任务1
 ### 像素坐标系、相机坐标系、世界坐标系之间的转换关系
 世界坐标系即惯性坐标系，可认为静止不动；相机坐标系可经旋转平移转换为世界坐标系；像素坐标系以图片左上角为原点，为二维坐标系。
-#### 相机坐标系至世界坐标系
-二坐标系之间相差一个欧氏变换，由旋转和平移组成。  
+#### 相机坐标系至世界坐标
+欧氏变换，由旋转和平移组成：  
 以旋转矩阵表示，a<sub>1</sub>=R<sub>12</sub>a<sub>2</sub>+t<sub>12</sub>  
-以变换矩阵表示，[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>
+以变换矩阵表示，[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>  
+以四元数描述旋转，p'=qpq<sup>-1</sup>  
+另有相似变换、仿射变换、射影变换。
+#### 像素坐标系至相机坐标系
+u轴向右水平、v轴向下垂直  
 
 ## 任务2
 ### 学习相机标定，学习至少一种相机标定方法，并使用matlab或opencv标定一个相机
@@ -14,7 +18,8 @@
 ## 任务4
 ### 理清项目中各坐标系的转换关系，制作思维导图
 # 学习笔记
-## 第三章
+## 第三讲
+##### 矩阵
 a^b为a叉乘b，可看作a^矩阵与b向量的运算，其中a^=[ 0 -a3 a2, a3 0 -a1, -a2 a1 0 ] 
 旋转矩阵R：[a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>]<sup>T</sup>=Ra', 
 R=[e<sub>1</sub><sup>T</sup>,e<sub>2</sub><sup>T</sup>,e<sub>3</sub><sup>T</sup>]<sup>T</sup>*[e'<sub>1</sub>, e'<sub>2</sub>, e'<sub>3</sub>]  
@@ -24,4 +29,13 @@ R=[e<sub>1</sub><sup>T</sup>,e<sub>2</sub><sup>T</sup>,e<sub>3</sub><sup>T</sup>
 R<sub>12</sub>等下标从右至左读。  
 变换矩阵T：[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>，
 T为[R,t \n 0<sup>T</sup>,1]。  
-罗德里格斯公式：将用旋转向量\theta n 表示的旋转转换为以旋转矩阵表示：R=cos theta I+(1-cos theta)nn<sub>T</sub>+sin theta n^
+旋转向量：方向与旋转轴一致，长度等于旋转角。
+罗德里格斯公式：将用旋转向量 $\theta$ n 表示的旋转转换为以旋转矩阵表示：R=cos $\theta$ I+(1-cos $\theta$ )nn<sub>T</sub>+sin $\theta$ n^
+欧拉角：以物体绕自身三轴的旋转表示角度，常用的RollPitchYaw角以ZYX顺序旋转。较直观，但存在万向锁问题。
+##### 四元数
+二维下欲将复平面向量旋转 $\theta$ 角，可乘以e<sup>i $\theta\$ </sup>。e<sup>i $\theta\$ </sup>=cos $\theta\$ + i*sin $\theta\$ 。  
+四元数q=q<sub>0</sub>+q<sub>1</sub>i+q<sub>2</sub>j+q<sub>3</sub>k。  
+可将ijk视为三轴，ij=k，ji=-k。  
+q<sup>-1</sup>=q*/||q<sup>2</sup>||，共轭q*为虚部取反。  
+四元数运算性质、旋转表示转换见P58。
+## 第五讲
