@@ -2,14 +2,19 @@
 ## 任务1
 ### 像素坐标系、相机坐标系、世界坐标系之间的转换关系
 世界坐标系即惯性坐标系，可认为静止不动；相机坐标系可经旋转平移转换为世界坐标系；像素坐标系以图片左上角为原点，为二维坐标系。
-#### 相机坐标系至世界坐标
+#### 相机坐标系与至世界坐标系
 欧氏变换，由旋转和平移组成：  
 以旋转矩阵表示，a<sub>1</sub>=R<sub>12</sub>a<sub>2</sub>+t<sub>12</sub>  
 以变换矩阵表示，[a',1]<sup>T</sup>=T[a,1]<sup>T</sup>  
 以四元数描述旋转，p'=qpq<sup>-1</sup>  
 另有相似变换、仿射变换、射影变换。
-#### 像素坐标系至相机坐标系
-u轴向右水平、v轴向下垂直  
+#### 像素坐标系
+像素坐标系u轴向右水平、v轴向下垂直  
+相机的投影计算分为归一化投影、畸变和针孔三步：  
+归一：(RP<sub>w</sub>+t)=[X,Y,Z]<sup>T</sup>$\to$[X/Z,Y/Z,1]<sup>T</sup>  
+畸变:x'=x(1+k<sub>1</sub>r<sup>2</sup>+k<sub>2</sub>r<sup>4</sup>+k<sub>3</sub>r<sup>6</sup>)+2p<sub>1</sub>xy+p<sub>2</sub>(r<sup>2</sup>+2x<sup>2</sup>)  
+    y'=y(1+k<sub>1</sub>r<sup>2</sup>+k<sub>2</sub>r<sup>4</sup>+k<sub>3</sub>r<sup>6</sup>)+p<sub>1</sub>(r<sup>2</sup>+2y<sup>2</sup>)+2p<sub>2</sub>xy  
+针孔：Z[u,v,1]<sup>T</sup>=KP  
 
 ## 任务2
 ### 学习相机标定，学习至少一种相机标定方法，并使用matlab或opencv标定一个相机
@@ -39,3 +44,17 @@ T为[R,t \n 0<sup>T</sup>,1]。
 q<sup>-1</sup>=q*/||q<sup>2</sup>||，共轭q*为虚部取反。  
 四元数运算性质、旋转表示转换见P58。
 ## 第五讲
+##### 针孔
+$\frac{Z}{f}=\frac{X}{X'}=\frac{Y}{Y'}$  
+u=f<sub>x</sub>$\frac{X}{Z}$+c<sub>x</sub>  
+v=f<sub>y</sub>$\frac{Y}{Z}$+c<sub>y</sub>
+Z(u,v,1)<sup>T</sup>=KP,K为相机内参三阶矩阵，P为相机坐标系坐标  
+相机位姿又称相机外参，结合位姿得ZP<sub>uv</sub>=K(RP<sub>w</sub>+t)=KTP<sub>w</sub>  
+也可将Z维度归一化处理，相当于将式中Z挪至右侧先行与原坐标相除，得到归一化坐标  
+##### 畸变
+畸变分为径向和切向畸变，分别主要由透镜自身形状和透镜安装误差造成。径向畸变可以多项式表示，得带畸变的归一化坐标  
+x'=x(1+k<sub>1</sub>r<sup>2</sup>+k<sub>2</sub>r<sup>4</sup>+k<sub>3</sub>r<sup>6</sup>)  
+y'=y(1+k<sub>1</sub>r<sup>2</sup>+k<sub>2</sub>r<sup>4</sup>+k<sub>3</sub>r<sup>6</sup>)  
+再加上切向畸变  
+x"=x'+2p<sub>1</sub>xy+p<sub>2</sub>(r<sup>2</sup>+2x<sup>2</sup>)  
+y"=y'+p<sub>1</sub>(r<sup>2</sup>+2y<sup>2</sup>)+2p<sub>2</sub>xy
